@@ -10,7 +10,7 @@ const HOST = '0.0.0.0';
 const app = express();
 app.get('/', (req, res) => {
   res.send(`
-<h1>Hello from MyService 2021-11-04 21:12</h1>
+<h1>Hello from MyService 2021-11-04 21:44</h1>
 <pre>${JSON.stringify(process.env, null, 2)}</pre>
 
 `);
