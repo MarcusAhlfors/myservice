@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  await sleep(Math.round(Math.random() * 1000 * 10));
+  //await sleep(Math.round(Math.random() * 1000 * 10));
 
   const status: DiploiStatus = {
     diploiStatusVersion: 1,
