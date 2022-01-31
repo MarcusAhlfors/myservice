@@ -21,7 +21,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
+  const second = Math.round(new Date().getTime() / 1000);
+
   //await sleep(Math.round(Math.random() * 1000 * 10));
+
+  const isRedisBuilding = second % 60 < 20;
+  const isRedisReady = second % 60 > 20 && second % 60 < 40;
+
+  const hasMysqlError = second % 20 < 10;
 
   const status: DiploiStatus = {
     diploiStatusVersion: 1,
@@ -33,30 +40,48 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         items: [
           {
             identifier: 'www',
+            description: 'NextJS front facing server',
             name: 'WWW',
             status: 'green',
           },
           {
             identifier: 'api',
+            description: 'API Server',
             name: 'Api',
             status: 'green',
           },
         ],
       },
-      {
-        identifier: 'redis',
-        name: 'Redis',
-        description: 'Redis cache',
-        status: 'yellow',
-        isPending: true,
-        message: 'Rebuilding cache...',
-      },
+      ...(isRedisBuilding
+        ? [
+            {
+              identifier: 'redis',
+              name: 'Redis',
+              description: 'Redis cache',
+              status: 'yellow',
+              isPending: true,
+              message: 'Rebuilding cache...',
+            } as DiploiStatusItem,
+          ]
+        : []),
+      ...(isRedisReady
+        ? [
+            {
+              identifier: 'redis',
+              name: 'Redis',
+              description: 'Redis cache',
+              status: 'green',
+              isPending: false,
+              message: '',
+            } as DiploiStatusItem,
+          ]
+        : []),
       {
         identifier: 'mysql',
         name: 'MySQL',
-        description: 'MySQL database',
-        status: 'red',
-        message: 'Out of memory',
+        description: 'MySQL 8.0.26',
+        status: hasMysqlError ? 'red' : 'green',
+        message: hasMysqlError ? 'Low on storage' : '',
       },
     ],
   };
