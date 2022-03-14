@@ -25,10 +25,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   //await sleep(Math.round(Math.random() * 1000 * 10));
 
-  const isRedisBuilding = second % 3600 < 1200;
-  const isRedisReady = second % 3600 > 1200 && second % 3600 < 2400;
+  const isRedisBuilding = false; //second % 3600 < 1200;
+  const isRedisReady = true; // second % 3600 > 1200 && second % 3600 < 2400;
 
-  const hasMysqlError = second % 300 < 60;
+  const hasMysqlError = false; // second % 300 < 60;
 
   const status: DiploiStatus = {
     diploiStatusVersion: 1,
