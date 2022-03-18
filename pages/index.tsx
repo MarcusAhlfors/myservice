@@ -45,7 +45,7 @@ const Index: NextPage = () => {
           <Link href="/more">
             <span>
               <h2>More stuff &rarr;</h2>
-              <p>Jingle Bells YYY and more and more and more.....</p>
+              <p>Jingle Bells YYY and more and more and more.....X</p>
             </span>
           </Link>
         </div>
